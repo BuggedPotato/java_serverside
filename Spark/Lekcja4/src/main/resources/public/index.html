@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl-pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Samochody</title>
+    <style>
+        body{
+            background-color: #202124;
+        }
+        form, body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        *{
+            font-family: Consolas;
+            color: whitesmoke;
+        }
+        input, button, select{
+            background-color: rgb(28,28,30);
+            margin: 15px;
+            border: 3px #3b3b40 solid;
+            border-radius: 4px;
+            font-size: 16pt;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zadanie 01 - cars manager</h1>
+    <form method="get" action="/add">
+        <label for="model">Model:</label>
+        <input id="model" type="text" name="model" required/>
+        <label for="doors">Doors:</label>
+        <select id="doors" name="doors" required>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+        </select>
+        <label for="damaged">Is damaged?</label>
+        <input id="damaged" type="checkbox" name="damaged"/>
+        <label>Country:</label>
+        <label for="pl">PL</label>
+        <input id="pl" type="radio" name="country" value="PL" required/>
+        <label for="eng">ENG</label>
+        <input id="eng" type="radio" name="country" value="ENG" required/>
+        <button type="submit">submit</button>
+    </form>
+
+    <a href="/text">text</a>
+    <a href="/json">json</a>
+    <a href="/html">html</a>
+</body>
+</html>
