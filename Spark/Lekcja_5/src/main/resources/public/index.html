@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl-pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Samochody</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body onload="init()">
+    <h1>Zadanie 02 - cars manager POST</h1>
+    <form>
+        <label for="model">Model:</label>
+        <input id="model" type="text"/>
+        <label for="year">Rok produkcji:</label>
+        <select id="year">
+            <option value=2000>2000</option>
+            <option value=2001>2001</option>
+            <option value=2002>2002</option>
+            <option value=2003>2003</option>
+        </select>
+
+        <label>Poduszki powietrzne</label>
+        <label for="driver">kierowca:</label>
+        <input class="airbag" type="checkbox" id="driver">
+        <label for="passenger">pasażer:</label>
+        <input class="airbag" type="checkbox" id="passenger">
+        <label for="back-seats">tylna kanapa:</label>
+        <input class="airbag" type="checkbox" id="back-seats">
+        <label for="back-sides">boczne z tyłu:</label>
+        <input class="airbag" type="checkbox" id="back-sides">
+
+        <label for="colour">Kolor:</label>
+        <input id="colour" type="color">
+
+        <button id="btn-add" type="button">submit</button>
+    </form>
+
+    <a href="/cars.html">strona z danymi</a>
+</body>
+</html>

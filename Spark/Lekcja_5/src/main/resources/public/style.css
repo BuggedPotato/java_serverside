@@ -1,0 +1,37 @@
+body{
+    background-color: #202124;
+}
+form, body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+*{
+    font-family: Consolas;
+    color: whitesmoke;
+}
+input, button, select{
+    background-color: rgb(28,28,30);
+    margin: 15px;
+    border: 3px #3b3b40 solid;
+    border-radius: 4px;
+    font-size: 16pt;
+}
+
+table
+{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td
+{
+    border: #cecece 1px solid;
+    padding: 10px;
+    height: max-content;
+}
+td:nth-child(6)
+{
+
+}
