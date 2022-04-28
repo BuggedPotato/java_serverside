@@ -21,8 +21,8 @@ public class ZadanieCars {
         staticFiles.location( "/public" );
         post( "/add", ZadanieCars::addFunction );
         post( "/json", ZadanieCars::jsonFunction );
-        get( "/delete/:id", ZadanieCars::delete );
-        get( "/update/:id", ZadanieCars::update );
+        post( "/delete", ZadanieCars::delete );
+        post( "/update", ZadanieCars::updateFunction );
     }
 
     private static String addFunction( Request req, Response res )
@@ -44,60 +44,37 @@ public class ZadanieCars {
         return gson.toJson( cars, listType );
     }
 
-    private static String htmlFunction( Request req, Response res )
+    private static String delete( Request req, Response res )
     {
-        String foo = """
-                <table>
-                    <thead>
-                        <tr>
-                            <td>id</id>
-                            <td>model</id>
-                            <td>damaged</id>
-                            <td>doors</id>
-                            <td>country</id>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    """;
-//        for( Car car : cars )
-//        {
-//            String row = "<tr>";
-//            row += "<td>" + car.id + "</td>";
-//            row += "<td>" + car.model + "</td>";
-//            row += "<td>" + car.damaged + "</td>";
-//            row += "<td>" + car.doors + "</td>";
-//            row += "<td>" + car.country + "</td>";
-//            row += "</tr>";
-//            foo += row;
-//        }
-//        foo += "</tbody></table>";
-//        res.type( "text/html" );
-        return foo;
-    }
-
-    private static boolean deleteAll( Request req, Response res )
-    {
-        cars.clear();
-        return true;
-    }
-
-    private static boolean delete( Request req, Response res )
-    {
+        Gson gson = new Gson();
+        String toDel = gson.fromJson( req.body(), String.class );
+        System.out.println( toDel );
+        res.type( "application/json" );
         for( int i = 0; i < cars.size(); i++ )
         {
-            if( cars.get(i).id == Integer.parseInt( req.params( "id" ) ) )
+            if( Objects.equals( cars.get( i ).uuid, toDel ) )
             {
                 cars.remove( i );
-                return true;
+                return gson.toJson( true, boolean.class );
             }
         }
-        return false;
+        return gson.toJson( false, boolean.class );
     }
 
-    private static String update( Request req, Response res )
+    private static String updateFunction( Request req, Response res )
     {
-
-        return "not found";
+        Gson gson = new Gson();
+        Car car = gson.fromJson( req.body(), Car.class );
+        for( int i = 0; i < cars.size(); i++ )
+        {
+            if( Objects.equals( cars.get( i ).uuid, car.uuid ) )
+            {
+                cars.get( i ).model = car.model;
+                cars.get( i ).year = car.year;
+                return gson.toJson( true, boolean.class );
+            }
+        }
+        return gson.toJson( false, boolean.class );
     }
 
 
