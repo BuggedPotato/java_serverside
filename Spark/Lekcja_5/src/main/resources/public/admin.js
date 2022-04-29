@@ -1,5 +1,33 @@
+const TEMPLATE = {
+    "id": 1,
+    "uuid": "ffef9e06-1271-4079-af9e-0612715079e9",
+    "model": "d",
+    "airbags": [
+        {
+            "name": "driver",
+            "value": false
+        },
+        {
+            "name": "passenger",
+            "value": false
+        },
+        {
+            "name": "back-seats",
+            "value": false
+        },
+        {
+            "name": "back-sides",
+            "value": false
+        }
+    ],
+    "year": 2003,
+    "colour": "#000000",
+    "invoiceGenerated": false
+};
+
 function init()
 {
+    document.getElementById( "generate-cars" ).addEventListener( "click", generateCars );
     loadCars();
 }
 
@@ -11,11 +39,17 @@ async function loadCars()
         table.removeChild( children[i] );
     }
     let cars = await asyncFetchJSON( "/json" );
-    console.log( cars );
     cars.map( ( car, i ) =>{
         table.appendChild( tableRow( car ) );
     } );
 }
+
+async function generateCars()
+{
+    await asyncFetchJSON( "/generate", TEMPLATE );
+    await loadCars();
+}
+
 
 function tableRow( car )
 {
@@ -29,8 +63,9 @@ function tableRow( car )
         }
         else if( key === "invoiceGenerated" )
             return;
-        else if( key === "colour" ) {
-            cell.style.backgroundColor = car[key];
+        else if( key === "colour" )
+        {
+            cell.style.backgroundColor = car[ key ];
         }
         else
             text = car[ key ];
@@ -39,49 +74,19 @@ function tableRow( car )
     } );
     let cell = document.createElement( "td" );
     let btn = document.createElement( "button" );
-    btn.innerText = "Edytuj";
-    btn.addEventListener( "click", async ()=>{ editDialog( car ) } )
+    btn.innerText = "Generuj fakturę VAT";
+    btn.addEventListener( "click", async ()=>{ await asyncFetchJSON( "/invoice", car ); loadCars() } )
     cell.appendChild( btn );
     row.appendChild( cell );
 
     cell = document.createElement( "td" );
     btn = document.createElement( "button" );
-    btn.innerText = "Usuń";
-    btn.addEventListener( "click", async ()=>{ await asyncFetchJSON( "/delete", car.uuid ); await loadCars() } )
+    btn.innerText = "Pobierz";
+    btn.addEventListener( "click", async ()=>{ await asyncFetchJSON( "/invoices", car ); loadCars() } )
+    btn.style.visibility = car.invoiceGenerated ? "visible" : "hidden";
     cell.appendChild( btn );
     row.appendChild( cell );
-
     return row;
-}
-
-function editDialog( car )
-{
-    const dialog = document.getElementById( "update-dialog" );
-    const cover = document.getElementById( "cover" );
-    const modelInput = document.getElementById( "model" );
-    const yearInput = document.getElementById( "year" );
-    modelInput.value = car.model;
-    yearInput.value = car.year;
-    dialog.style.visibility = "visible";
-    cover.style.visibility = "visible";
-
-    document.getElementById( "update-button" ).onclick = async () => {
-        car.model = modelInput.value;
-        car.year = yearInput.value;
-        await asyncFetchJSON( "/update", car );
-        dialog.style.visibility = "hidden";
-        cover.style.visibility = "hidden";
-        modelInput.value = "";
-        yearInput.value = 2000;
-        loadCars();
-    }
-
-    document.getElementById( "cancel-button" ).onclick = () => {
-        dialog.style.visibility = "hidden";
-        cover.style.visibility = "hidden";
-        modelInput.value = "";
-        yearInput.value = 2000;
-    }
 }
 
 async function asyncFetchJSON( target, data = {} )

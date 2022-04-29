@@ -7,6 +7,7 @@ public class Car implements Comparable<Car> {
     public ArrayList<Airbag> airbags;
     public int year;
     public String colour;
+    public boolean invoiceGenerated = false;
 
     public Car(int id, String uuid, String model, ArrayList<Airbag> airbags, int year, String colour)
     {

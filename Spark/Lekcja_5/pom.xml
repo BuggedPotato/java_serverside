@@ -35,6 +35,11 @@
             <artifactId>java-uuid-generator</artifactId>
             <version>4.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
+        </dependency>
 
     </dependencies>
 
