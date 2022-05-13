@@ -80,9 +80,9 @@ function tableRow( car )
     row.appendChild( cell );
 
     cell = document.createElement( "td" );
-    btn = document.createElement( "button" );
+    btn = document.createElement( "a" );
     btn.innerText = "Pobierz";
-    btn.addEventListener( "click", async ()=>{ await asyncFetchJSON( "/invoices", car ); loadCars() } )
+    btn.href = "invoices/" + car.uuid;
     btn.style.visibility = car.invoiceGenerated ? "visible" : "hidden";
     cell.appendChild( btn );
     row.appendChild( cell );
@@ -99,4 +99,16 @@ async function asyncFetchJSON( target, data = {} )
     if( !res.ok )
         return res.status;
     return await res.json();
+}
+
+async function getInvoice( target )
+{
+    const options = {
+        method: "GET",
+    };
+    let res = await fetch( target, options );
+    if( !res.ok )
+        return res.status;
+    console.log(res)
+    return res;
 }
